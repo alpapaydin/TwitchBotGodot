@@ -1,4 +1,4 @@
-extends Node
+extends Node2D
 
 var namescene = preload("res://scenes/show/chatall/name_popup.tscn")
 @onready var rect = $SpawnRect.get_rect()
@@ -18,7 +18,7 @@ func spawnChatties(chatties):
 func spawn_single_chatty(chatter):
 	var namepop = namescene.instantiate()
 	var random_point = get_random_point_in_rect(rect)
-	namepop.get_node("Label").text = chatter
+	namepop.get_node("NamePopup/Label").text = chatter
 	namepop.global_position = random_point
 	print(random_point)
 	get_parent().add_child(namepop)

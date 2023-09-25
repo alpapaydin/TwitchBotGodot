@@ -730,16 +730,22 @@ script = ExtResource("3_djldm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Pet" type="Node2D" parent="."]
-
-[node name="dragpart" type="Control" parent="."]
+[node name="center" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 script = ExtResource("3_wl6rc")
 
-[node name="Sprite2D" type="Sprite2D" parent="dragpart"]
+[node name="VBoxContainer" type="VBoxContainer" parent="center"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="center/VBoxContainer"]
+layout_mode = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="center/VBoxContainer/HBoxContainer"]
 texture_filter = 1
 scale = Vector2(6, 6)
 texture = ExtResource("2_80px1")
@@ -758,10 +764,10 @@ metadata/_aseprite_wizard_config_ = {
 "source": "C:/Users/Alp/Desktop/ase/piratease/6-Enemy-Whale.aseprite"
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="dragpart/Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="center/VBoxContainer/HBoxContainer/Sprite2D"]
 autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_0k4ua")
 }
 
-[connection signal="animation_finished" from="dragpart/Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[connection signal="animation_finished" from="center/VBoxContainer/HBoxContainer/Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
