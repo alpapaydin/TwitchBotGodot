@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://bmssm6gt158dy"]
+
+[ext_resource type="Script" path="res://scenes/show/chatall/spawn_chat_names.gd" id="1_vujl0"]
+
+[node name="SpawnChatNames" type="Node"]
+script = ExtResource("1_vujl0")
+
+[node name="SpawnRect" type="ColorRect" parent="."]
+offset_left = 10.0
+offset_top = -2.0
+offset_right = 513.0
+offset_bottom = 113.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
+color = Color(1, 1, 1, 0)
