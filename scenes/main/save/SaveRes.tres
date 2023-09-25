@@ -1,0 +1,6 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://ba3dfedfmkmdl"]
+
+[ext_resource type="Script" path="res://scenes/main/save/SaveRes.gd" id="1_k3raq"]
+
+[resource]
+script = ExtResource("1_k3raq")

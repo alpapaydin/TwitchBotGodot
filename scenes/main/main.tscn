@@ -763,7 +763,7 @@ metadata/_aseprite_wizard_config_ = {
 "o_name": "",
 "only_visible": false,
 "op_exp": false,
-"player": "Sprite2D/AnimationPlayer",
+"player": "center/VBoxContainer/HBoxContainer/whale/Sprite2D/AnimationPlayer",
 "source": "C:/Users/Alp/Desktop/ase/piratease/6-Enemy-Whale.aseprite"
 }
 

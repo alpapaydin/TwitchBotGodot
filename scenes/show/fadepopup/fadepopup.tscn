@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c44pp8ugyrr4x"]
 
 [ext_resource type="Script" path="res://scenes/show/fadepopup/fadepopup.gd" id="1_fxy3g"]
-[ext_resource type="AudioStream" uid="uid://chhm6spo255pd" path="res://asset/sfx/coin.ogg" id="2_8ymwn"]
 [ext_resource type="FontFile" uid="uid://en3gsaq6lik7" path="res://asset/font/Montserrat-Medium.ttf" id="2_c8bc4"]
+[ext_resource type="AudioStream" uid="uid://0hik7ibdhovg" path="res://asset/sfx/pop.ogg" id="3_6j7c8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rda5w"]
 bg_color = Color(0.117647, 0.117647, 0.117647, 0.352941)
@@ -61,4 +61,4 @@ libraries = {
 }
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
-stream = ExtResource("2_8ymwn")
+stream = ExtResource("3_6j7c8")
