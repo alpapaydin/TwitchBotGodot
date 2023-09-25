@@ -1,4 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://b721c4gsnwa1p"]
+[gd_scene load_steps=5 format=3 uid="uid://b721c4gsnwa1p"]
+
+[ext_resource type="AudioStream" uid="uid://0hik7ibdhovg" path="res://asset/sfx/pop.ogg" id="1_i4h5s"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbs6p"]
 bg_color = Color(1, 1, 1, 0.811765)
@@ -59,12 +61,14 @@ _data = {
 [node name="NamePopup" type="Node2D"]
 
 [node name="NamePopup" type="PanelContainer" parent="."]
-modulate = Color(1, 1, 1, 0)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 113.0
+offset_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
+scale = Vector2(1e-05, 1e-05)
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_styles/panel = SubResource("StyleBoxFlat_tbs6p")
@@ -73,6 +77,7 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_tbs6p")
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
 theme_override_font_sizes/font_size = 44
 text = "Baba"
 
@@ -81,3 +86,6 @@ autoplay = "pop"
 libraries = {
 "": SubResource("AnimationLibrary_apfnd")
 }
+
+[node name="SFX" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("1_i4h5s")

@@ -1,0 +1,64 @@
+[gd_scene load_steps=7 format=3 uid="uid://c44pp8ugyrr4x"]
+
+[ext_resource type="Script" path="res://scenes/show/fadepopup/fadepopup.gd" id="1_fxy3g"]
+[ext_resource type="AudioStream" uid="uid://chhm6spo255pd" path="res://asset/sfx/coin.ogg" id="2_8ymwn"]
+[ext_resource type="FontFile" uid="uid://en3gsaq6lik7" path="res://asset/font/Montserrat-Medium.ttf" id="2_c8bc4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rda5w"]
+bg_color = Color(0.117647, 0.117647, 0.117647, 0.352941)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+expand_margin_left = 3.0
+expand_margin_top = 1.0
+expand_margin_right = 3.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="Animation" id="Animation_gcrg1"]
+resource_name = "fade"
+length = 5.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("..:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.9, 3.9, 5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tpvk8"]
+_data = {
+"fade": SubResource("Animation_gcrg1")
+}
+
+[node name="Popup" type="PanelContainer"]
+modulate = Color(1, 1, 1, 0)
+offset_left = -200.0
+offset_top = -180.0
+offset_right = 200.0
+offset_bottom = -100.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_rda5w")
+script = ExtResource("1_fxy3g")
+
+[node name="PopupText" type="Label" parent="."]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_c8bc4")
+theme_override_font_sizes/font_size = 35
+text = "saol remzikral"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="PopupText"]
+autoplay = "fade"
+libraries = {
+"": SubResource("AnimationLibrary_tpvk8")
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_8ymwn")

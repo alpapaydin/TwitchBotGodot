@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_2460s"]
 [ext_resource type="Texture2D" uid="uid://ce8mroyyc2f1s" path="res://scenes/main/6-Enemy-Whale.png" id="2_80px1"]
+[ext_resource type="Script" path="res://scenes/main/whale.gd" id="3_2omcp"]
 [ext_resource type="Script" path="res://scenes/main/WebSocket.gd" id="3_djldm"]
-[ext_resource type="Script" path="res://scenes/main/dragpart.gd" id="3_wl6rc"]
 
 [sub_resource type="Animation" id="Animation_v4swk"]
 length = 0.55
@@ -197,7 +197,7 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_fxpoq"]
-length = 0.1
+length = 0.333
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -722,7 +722,10 @@ _data = {
 "Swallow (Bomb)": SubResource("Animation_nhf7t")
 }
 
-[node name="main" type="Node2D"]
+[node name="main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 2
 script = ExtResource("1_2460s")
 
 [node name="WebSocket" type="Node" parent="."]
@@ -733,25 +736,25 @@ script = ExtResource("3_djldm")
 [node name="center" type="Control" parent="."]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("3_wl6rc")
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="center"]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="center/VBoxContainer"]
 layout_mode = 2
 
-[node name="Sprite2D" type="Sprite2D" parent="center/VBoxContainer/HBoxContainer"]
+[node name="whale" type="Node2D" parent="center/VBoxContainer/HBoxContainer"]
+z_index = -2
+script = ExtResource("3_2omcp")
+
+[node name="Sprite2D" type="Sprite2D" parent="center/VBoxContainer/HBoxContainer/whale"]
 texture_filter = 1
 scale = Vector2(6, 6)
 texture = ExtResource("2_80px1")
 hframes = 8
 vframes = 7
-frame = 31
+frame = 28
 metadata/_aseprite_wizard_config_ = {
 "keep_anim_length": false,
 "layer": "",
@@ -764,10 +767,8 @@ metadata/_aseprite_wizard_config_ = {
 "source": "C:/Users/Alp/Desktop/ase/piratease/6-Enemy-Whale.aseprite"
 }
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="center/VBoxContainer/HBoxContainer/Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="center/VBoxContainer/HBoxContainer/whale/Sprite2D"]
 autoplay = "Idle"
 libraries = {
 "": SubResource("AnimationLibrary_0k4ua")
 }
-
-[connection signal="animation_finished" from="center/VBoxContainer/HBoxContainer/Sprite2D/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

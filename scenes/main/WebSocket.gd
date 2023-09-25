@@ -2,7 +2,6 @@ extends Node
 
 var tcpserver
 var socket = WebSocketPeer.new()
-@onready var world = get_parent()
 
 func _ready():
 	tcpserver = TCPServer.new()
@@ -25,7 +24,7 @@ func _process(_delta):
 			for i in packet:
 				message += char(i)
 			#print(message)
-			world.gotMessage(message)
+			Twitch.gotMessage(message)
 			socket.close()
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.

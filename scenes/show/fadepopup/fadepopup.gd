@@ -1,8 +1,11 @@
 extends PanelContainer
 
 var text
+var below = false
 
 func _ready():
+	if below:
+		position.y = 100
 	$PopupText.text = text
 	$AudioStreamPlayer2D.play()
 	
