@@ -22,7 +22,7 @@ func _save():
 
 func _load():
 	var dir = DirAccess.open("user://")
-	if dir.file_exists("data.tres"):	
-		var loadResource = preload("user://data.tres")
+	if dir.file_exists("user://data.tres"):
+		var loadResource = load("user://data.tres")
 		Twitch.players = loadResource.playerData
 		print("loaded game")

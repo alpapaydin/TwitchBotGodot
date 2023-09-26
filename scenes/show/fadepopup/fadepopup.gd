@@ -5,7 +5,10 @@ var below = false
 
 func _ready():
 	if below:
+		$HeartRect.queue_free()
 		position.y = 100
+	else:
+		$GoldRect.queue_free()
 	$PopupText.text = text
 	$AudioStreamPlayer2D.play()
 	

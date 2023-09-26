@@ -5,14 +5,17 @@
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rda5w"]
 bg_color = Color(0.117647, 0.117647, 0.117647, 0.352941)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
-corner_radius_bottom_left = 30
-expand_margin_left = 3.0
-expand_margin_top = 1.0
-expand_margin_right = 3.0
-expand_margin_bottom = 1.0
+expand_margin_left = 5.0
+expand_margin_top = 3.0
+expand_margin_right = 5.0
+expand_margin_bottom = 3.0
 
 [sub_resource type="Animation" id="Animation_rblsm"]
 resource_name = "pop"
@@ -50,8 +53,8 @@ _data = {
 [node name="Popup" type="PanelContainer"]
 offset_left = -190.0
 offset_top = -42.0
-offset_right = 184.0
-offset_bottom = 37.0
+offset_right = -132.0
+offset_bottom = 29.0
 scale = Vector2(0.1, 0.1)
 theme_override_styles/panel = SubResource("StyleBoxFlat_rda5w")
 script = ExtResource("1_1buqp")
@@ -59,7 +62,7 @@ script = ExtResource("1_1buqp")
 [node name="PopupText" type="Label" parent="."]
 layout_mode = 2
 theme_override_font_sizes/font_size = 55
-text = "saol remzikral"
+text = "sa"
 
 [node name="TextAnim" type="AnimationPlayer" parent="PopupText"]
 autoplay = "pop"

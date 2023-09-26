@@ -1,0 +1,63 @@
+[gd_scene load_steps=8 format=3 uid="uid://b6ytr1ltl81b4"]
+
+[ext_resource type="Texture2D" uid="uid://cpy4x8thtgdh" path="res://scenes/enemies/projectile/fireball/fireball.png" id="1_eu7hi"]
+[ext_resource type="Script" path="res://scenes/enemies/projectile/fireball/fireball.gd" id="1_u4v5m"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bbyae"]
+atlas = ExtResource("1_eu7hi")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rbujx"]
+atlas = ExtResource("1_eu7hi")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3x3gm"]
+atlas = ExtResource("1_eu7hi")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nttu4"]
+atlas = ExtResource("1_eu7hi")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5fg3u"]
+animations = [{
+"frames": [{
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_bbyae")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_rbujx")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_3x3gm")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_nttu4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 15.0
+}]
+
+[node name="fireball" type="Node2D"]
+script = ExtResource("1_u4v5m")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_5fg3u")
+autoplay = "default"
+frame_progress = 0.380705
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"source": "C:/Users/Alp/Desktop/ase/Enemies/Aseprite/fireball.ase"
+}
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

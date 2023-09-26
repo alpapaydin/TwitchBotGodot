@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtu5bre5jbvjy"
-path="res://.godot/imported/Dark-Bolt.png-cc85fc03f870cebc138d53327820784a.ctex"
+uid="uid://cpy4x8thtgdh"
+path="res://.godot/imported/fireball.png-065230f173240d928ff593c327297833.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/main/Dark-Bolt.png"
-dest_files=["res://.godot/imported/Dark-Bolt.png-cc85fc03f870cebc138d53327820784a.ctex"]
+source_file="res://scenes/enemies/projectile/fireball/fireball.png"
+dest_files=["res://.godot/imported/fireball.png-065230f173240d928ff593c327297833.ctex"]
 
 [params]
 

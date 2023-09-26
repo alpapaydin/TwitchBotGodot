@@ -1,0 +1,142 @@
+[gd_scene load_steps=20 format=3 uid="uid://b7gidmh47uwpq"]
+
+[ext_resource type="Texture2D" uid="uid://d0jhe5usnjyyk" path="res://scenes/show/vfx/Fire-bomb.png" id="1_8durb"]
+[ext_resource type="Script" path="res://scenes/show/vfx/oneshot.gd" id="1_bpisc"]
+[ext_resource type="AudioStream" uid="uid://6vc4rtftcn5r" path="res://asset/sfx/explosion.ogg" id="3_jsfvj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_um6ne"]
+atlas = ExtResource("1_8durb")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7e8gy"]
+atlas = ExtResource("1_8durb")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1xsc"]
+atlas = ExtResource("1_8durb")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_085l3"]
+atlas = ExtResource("1_8durb")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s77dk"]
+atlas = ExtResource("1_8durb")
+region = Rect2(0, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j00nw"]
+atlas = ExtResource("1_8durb")
+region = Rect2(64, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_r1njj"]
+atlas = ExtResource("1_8durb")
+region = Rect2(128, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ykego"]
+atlas = ExtResource("1_8durb")
+region = Rect2(192, 64, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i38ed"]
+atlas = ExtResource("1_8durb")
+region = Rect2(0, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vewne"]
+atlas = ExtResource("1_8durb")
+region = Rect2(64, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pcnqg"]
+atlas = ExtResource("1_8durb")
+region = Rect2(128, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfue5"]
+atlas = ExtResource("1_8durb")
+region = Rect2(192, 128, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_depre"]
+atlas = ExtResource("1_8durb")
+region = Rect2(0, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_08rxf"]
+atlas = ExtResource("1_8durb")
+region = Rect2(64, 192, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qh61h"]
+atlas = ExtResource("1_8durb")
+region = Rect2(128, 192, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7swi1"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_um6ne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7e8gy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1xsc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_085l3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s77dk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j00nw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_r1njj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ykego")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i38ed")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vewne")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcnqg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfue5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_depre")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_08rxf")
+}, {
+"duration": 7.14286,
+"texture": SubResource("AtlasTexture_qh61h")
+}],
+"loop": false,
+"name": &"default",
+"speed": 17.0
+}]
+
+[node name="explosion" type="Node2D"]
+scale = Vector2(8, 8)
+script = ExtResource("1_bpisc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_7swi1")
+autoplay = "default"
+frame = 14
+frame_progress = 1.0
+metadata/_aseprite_wizard_config_ = {
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"source": "C:/Users/Alp/Desktop/ase/Fire-bomb.ase"
+}
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_jsfvj")
+autoplay = true

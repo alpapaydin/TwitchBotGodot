@@ -24,7 +24,8 @@ func _process(_delta):
 			for i in packet:
 				message += char(i)
 			#print(message)
-			Twitch.gotMessage(message)
+			var response = Twitch.gotMessage(message)
+			socket.send_text(response)
 			socket.close()
 	elif state == WebSocketPeer.STATE_CLOSING:
 		# Keep polling to achieve proper close.

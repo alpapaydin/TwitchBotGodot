@@ -1,11 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://c44pp8ugyrr4x"]
+[gd_scene load_steps=24 format=3 uid="uid://c44pp8ugyrr4x"]
 
 [ext_resource type="Script" path="res://scenes/show/fadepopup/fadepopup.gd" id="1_fxy3g"]
 [ext_resource type="FontFile" uid="uid://en3gsaq6lik7" path="res://asset/font/Montserrat-Medium.ttf" id="2_c8bc4"]
 [ext_resource type="AudioStream" uid="uid://0hik7ibdhovg" path="res://asset/sfx/pop.ogg" id="3_6j7c8"]
+[ext_resource type="Texture2D" uid="uid://boiib2cn0bi46" path="res://scenes/show/fadepopup/MonedaD.png" id="4_13ve4"]
+[ext_resource type="Texture2D" uid="uid://cjp43kawbeae5" path="res://scenes/show/fadepopup/heart2.png" id="4_ehd2l"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rda5w"]
-bg_color = Color(0.117647, 0.117647, 0.117647, 0.352941)
+bg_color = Color(0.117647, 0.117647, 0.117647, 0.592157)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
 corner_radius_top_left = 30
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
@@ -36,8 +42,128 @@ _data = {
 "fade": SubResource("Animation_gcrg1")
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_xjor6"]
+atlas = ExtResource("4_13ve4")
+region = Rect2(0, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tdkh8"]
+atlas = ExtResource("4_13ve4")
+region = Rect2(16, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f0rk3"]
+atlas = ExtResource("4_13ve4")
+region = Rect2(32, 0, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eu52a"]
+atlas = ExtResource("4_13ve4")
+region = Rect2(0, 16, 16, 16)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfxcj"]
+atlas = ExtResource("4_13ve4")
+region = Rect2(16, 16, 16, 16)
+filter_clip = true
+
+[sub_resource type="Animation" id="Animation_0c54c"]
+length = 0.5
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("AtlasTexture_xjor6"), SubResource("AtlasTexture_tdkh8"), SubResource("AtlasTexture_f0rk3"), SubResource("AtlasTexture_eu52a"), SubResource("AtlasTexture_hfxcj")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wjd22"]
+_data = {
+"default": SubResource("Animation_0c54c")
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drqhs"]
+atlas = ExtResource("4_ehd2l")
+region = Rect2(0, 32, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qpw0a"]
+atlas = ExtResource("4_ehd2l")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p55qo"]
+atlas = ExtResource("4_ehd2l")
+region = Rect2(32, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f7drf"]
+atlas = ExtResource("4_ehd2l")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_flnsd"]
+atlas = ExtResource("4_ehd2l")
+region = Rect2(0, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hfl1j"]
+atlas = ExtResource("4_ehd2l")
+region = Rect2(32, 0, 32, 32)
+filter_clip = true
+
+[sub_resource type="Animation" id="Animation_v3xpq"]
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = false
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = false
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("AtlasTexture_qpw0a"), SubResource("AtlasTexture_p55qo"), SubResource("AtlasTexture_f7drf"), SubResource("AtlasTexture_flnsd"), SubResource("AtlasTexture_hfl1j"), SubResource("AtlasTexture_drqhs")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0kok0"]
+_data = {
+"default": SubResource("Animation_v3xpq")
+}
+
 [node name="Popup" type="PanelContainer"]
-modulate = Color(1, 1, 1, 0)
 offset_left = -200.0
 offset_top = -180.0
 offset_right = 200.0
@@ -62,3 +188,51 @@ libraries = {
 
 [node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("3_6j7c8")
+
+[node name="GoldRect" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0.360784)
+texture_filter = 1
+layout_mode = 2
+texture = SubResource("AtlasTexture_xjor6")
+stretch_mode = 4
+metadata/_aseprite_wizard_config_ = {
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"player": "GoldRect/GoldAnim",
+"source": "C:/Users/Alp/Desktop/coin/MonedaD.ase"
+}
+
+[node name="GoldAnim" type="AnimationPlayer" parent="GoldRect"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_wjd22")
+}
+
+[node name="HeartRect" type="TextureRect" parent="."]
+z_index = -2
+texture_filter = 1
+layout_mode = 2
+texture = SubResource("AtlasTexture_drqhs")
+stretch_mode = 4
+metadata/_aseprite_wizard_config_ = {
+"keep_anim_length": false,
+"layer": "",
+"o_ex_p": "",
+"o_folder": "",
+"o_name": "",
+"only_visible": false,
+"op_exp": false,
+"player": "TextureRect/AnimationPlayer",
+"source": "C:/Users/Alp/Desktop/Red Heart/Being golden/32px/heart2.ase"
+}
+
+[node name="HeartAnim" type="AnimationPlayer" parent="HeartRect"]
+autoplay = "default"
+libraries = {
+"": SubResource("AnimationLibrary_0kok0")
+}
