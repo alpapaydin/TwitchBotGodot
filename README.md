@@ -2,6 +2,11 @@
 
 An interactive Twitch Chatbot built using Godot and Python TwitchIO. Designed to enable various in-game commands and features.
 
+<p align="center">
+  <img src="asset/twitch/ss.png" />
+</p>
+
+
 ---
 
 ## 🌟 Features
