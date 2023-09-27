@@ -27,6 +27,9 @@ func _process(_delta):
 		helpTimer.stop()
 		
 func help():
+	if player.dead:
+		Twitch.popup("!res")
+		return
 	Twitch.popup("!attack")
 
 func spawn_enemy():

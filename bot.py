@@ -226,7 +226,7 @@ class Bot(commands.Bot):
     async def fw(self, ctx: commands.Context):
         user = self.create_user(self.user_id, self.nick)
         followers = await user.fetch_channel_followers(token)
-        #print(followers)
+        print(followers)
         random_follower = random.choice(followers)
         await ctx.send(f"respect @{random_follower.user.name}")
     @commands.command()

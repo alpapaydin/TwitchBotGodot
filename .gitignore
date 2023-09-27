@@ -1,6 +1,6 @@
 asset/twitch/music.mp3
 icon.svg.import
-
+.env
 # Godot 4+ specific ignores
 .godot/
 
@@ -16,3 +16,4 @@ export_presets.cfg
 .mono/
 data_*/
 mono_crash.*.json
+.env
