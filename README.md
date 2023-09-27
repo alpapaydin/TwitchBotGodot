@@ -70,7 +70,7 @@ An interactive Twitch Chatbot built using Godot and Python TwitchIO. Designed to
 1️⃣ **Clone the Repository**
 
     ```bash
-    git clone <repository_url>
+    git clone alpapaydin/TwitchBotGodot
     ```
 
 2️⃣ **Install Python Dependencies**
@@ -87,11 +87,12 @@ An interactive Twitch Chatbot built using Godot and Python TwitchIO. Designed to
     - Access Token
     - User ID
     - Channel Name
+    - Discord Link
 
 5️⃣ **Run the Python Script**
 
     ```bash
-    python <script_name>.py
+    python bot.py
     ```
     
 6️⃣ **Run the Game in Godot**
@@ -112,9 +113,10 @@ Feel free to fork the project and submit a pull request.
 
 ## ⚙️ Configuration
 
-For the chatbot to work properly, populate certain variables in the Python script:
+For the chatbot to work properly, populate certain variables in the "bot.py":
 
 ```python
 ACCESS_TOKEN = "Your Twitch API OAuth token"
 USER_ID = "Your Twitch user ID"
 CHANNEL_NAME = "The Twitch channel where the bot will operate"
+DISCORD_LINK = "Your discord link for !dc command."

@@ -11,10 +11,12 @@ from gtts import gTTS
 from datetime import datetime, timezone, timedelta
 from youtubesearchpython import VideosSearch
 from moviepy.editor import AudioFileClip  # Import AudioFileClip class
+
 token = ""
 adminuserid = ""
 channelname = "basitgaming"
 discordlink = "https://discord.gg/VhR4A8yUN6"
+
 pygame.mixer.init() 
 bgmchannel = pygame.mixer.Channel(0)
 sfxchannel = pygame.mixer.Channel(1)

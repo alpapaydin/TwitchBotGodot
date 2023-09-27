@@ -1,0 +1,7 @@
+pygame
+yt-dlp
+websockets
+twitchio
+gtts
+youtubesearchpython
+moviepy
