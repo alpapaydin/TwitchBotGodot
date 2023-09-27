@@ -14,7 +14,6 @@ var command_cost = {
 	"heal": 10.0,
 	"speak": 31.0,
 	"speakeng": 20.0,
-	"sa": 999999.0,
 }
 var command_cooldowns = {
 	"attack": 10.0,
@@ -49,7 +48,7 @@ func gotMessage(msg):
 					return playSong(sender, arg)
 				"heal":
 					if isOnCooldown(sender, "attack"):
-						return "Cooldown"
+						return "Cooldown..."
 					updateCooldown(sender, "attack")
 					return playerHeal(sender)
 				"stats":
@@ -161,7 +160,7 @@ func playerAttack(player):
 	var destroyed = whale.attack(players[player]["items"].has("kozmetik"))
 	var multiplier = players[player]["upgrades"]["attack"]
 	var attackLevel = players[player]["level"] * multiplier
-	var getGold = destroyed * attackLevel
+	var getGold = destroyed * attackLevel ## destroyed ** 2 olurmu?
 	var gotExp = getExp(player, destroyed)
 	pickupCoin(player, getGold)
 	return player + " popped " + str(destroyed) + " enemies. Got " + str(getGold) + " gold and " + str(gotExp) + " exp."

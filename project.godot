@@ -33,10 +33,6 @@ Audioload="*res://scenes/main/Audioload.gd"
 window/size/borderless=true
 window/size/always_on_top=true
 
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg")
-
 [gui]
 
 theme/custom_font="res://asset/font/Montserrat-ExtraLight.ttf"
