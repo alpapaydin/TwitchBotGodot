@@ -11,11 +11,16 @@ from gtts import gTTS
 from datetime import datetime, timezone, timedelta
 from youtubesearchpython import VideosSearch
 from moviepy.editor import AudioFileClip  # Import AudioFileClip class
+from dotenv import load_dotenv
 
-token = ""
-adminuserid = ""
-channelname = "basitgaming"
-discordlink = "https://discord.gg/VhR4A8yUN6"
+# Load .env file
+load_dotenv()
+
+# Retrieve variables
+token = os.getenv("TOKEN")
+adminuserid = os.getenv("ADMIN_USER_ID")
+channelname = os.getenv("CHANNEL_NAME")
+discordlink = os.getenv("DISCORD_LINK")
 
 pygame.mixer.init() 
 bgmchannel = pygame.mixer.Channel(0)

@@ -88,7 +88,7 @@ An interactive Twitch Chatbot built using Godot and Python TwitchIO. Designed to
 
 4️⃣ **Configure Python Script**
 
-    Update the Python script with your Twitch channel data:
+    Update the .env file with your Twitch channel data:
     - Access Token
     - User ID
     - Channel Name
@@ -118,7 +118,7 @@ Feel free to fork the project and submit a pull request.
 
 ## ⚙️ Configuration
 
-For the chatbot to work properly, populate certain variables in the "bot.py":
+For the chatbot to work properly, populate certain variables in the ".env":
 
 ```python
 ACCESS_TOKEN = "Your Twitch API OAuth token"
