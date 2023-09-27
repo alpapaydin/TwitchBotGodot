@@ -30,7 +30,7 @@ def download_first_audio(URL):
     # Options for yt-dlp
     ydl_opts = {
     'format': 'm4a/bestaudio/best',
-    'outtmpl': 'music',
+    'outtmpl': 'asset/twitch/music',
     # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
     'postprocessors': [{  # Extract audio using ffmpeg
         'key': 'FFmpegExtractAudio',
@@ -166,7 +166,7 @@ class Bot(commands.Bot):
         if not await self.is_user_subscribed_for(ctx.author.id, ctx.author.name, MINUTES_REQUIRED):
             await ctx.send(f"Sorry {ctx.author.name}, you need to be subscribed for at least {MINUTES_REQUIRED} minutes to use this command.")
             return
-        sound = pygame.mixer.Sound("sfx/shake.ogg")
+        sound = pygame.mixer.Sound("asset/sfx/shake.ogg")
         sfxchannel.play(sound)
         await ctx.send("anayn")
     @commands.command()
@@ -195,8 +195,8 @@ class Bot(commands.Bot):
             await ctx.send(response)
             return
         speech = gTTS(text=search, lang='tr', slow=False)
-        speech.save("play.mp3")
-        sound = pygame.mixer.Sound("play.mp3")
+        speech.save("asset/twitch/play.mp3")
+        sound = pygame.mixer.Sound("asset/twitch/play.mp3")
         sfxchannel.play(sound)
         await ctx.send(f'Now playing: {search}')
     @commands.command()
@@ -207,8 +207,8 @@ class Bot(commands.Bot):
             await ctx.send(response)
             return
         speech = gTTS(text=search, lang='en', slow=False)
-        speech.save("play.mp3")
-        sound = pygame.mixer.Sound("play.mp3")
+        speech.save("asset/twitch/play.mp3")
+        sound = pygame.mixer.Sound("asset/twitch/play.mp3")
         sfxchannel.play(sound)
         await ctx.send(f'Now playing: {search}')
     @commands.command()
@@ -239,7 +239,7 @@ class Bot(commands.Bot):
             return
         if bgmchannel.get_busy() == False:
             queryresult = download_audio_from_query(search)
-            sound = pygame.mixer.Sound("music.mp3")
+            sound = pygame.mixer.Sound("asset/twitch/music.mp3")
             bgmchannel.play(sound)
             
             try:
