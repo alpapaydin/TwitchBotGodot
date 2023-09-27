@@ -1,9 +1,10 @@
+<p align="center">
 # Twitch Chatbot in Godot 🎮
 
 An interactive Twitch Chatbot built using Godot and Python TwitchIO. Designed to enable various in-game commands and features.
 
-<p align="center">
-  <img src="asset/twitch/ss.png" />
+
+  <img src="asset/twitch/ss.png" width="300" height="300" />
 </p>
 
 
