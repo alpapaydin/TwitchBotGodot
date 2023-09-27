@@ -26,6 +26,7 @@ general/text_to_speech=true
 Twitch="*res://scenes/main/twitch.gd"
 Speak="*res://scenes/main/tts.gd"
 Saver="*res://scenes/main/save/saver.gd"
+Audioload="*res://scenes/main/Audioload.gd"
 
 [display]
 

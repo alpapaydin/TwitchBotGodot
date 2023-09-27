@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var hp = 3131.0
+var hp = 31313.0
 var maxhp = hp
 var dead = false
 var is_dragging: bool = false
@@ -88,8 +88,8 @@ func onDead():
 func attack(kozmetik):
 	anim.play("Attack")
 	if kozmetik:
-		return await attackPulse(310, 31, "lightning")
-	return await attackPulse(310, 31, "explosion")
+		return attackPulse(310, 31, "lightning")
+	return attackPulse(310, 31, "explosion")
 	
 func flipandmove():
 	$Sprite2D.flip_h = !$Sprite2D.flip_h

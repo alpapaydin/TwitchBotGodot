@@ -2,13 +2,20 @@ extends Node
 
 var players = {}
 var sender_command_cooldowns = {}
+var pending_dices = {}  # Store pending dice requests
 var shopItems = {"maserati": 4500, "adidas esofman takimi": 3100, "kozmetik":315}
 var cps = preload("res://scenes/show/vfx/coinpickup/coin.tscn")
 var popupscene = preload("res://scenes/show/singlepopup/popup.tscn")
 var fadepopupscene = preload("res://scenes/show/fadepopup/fadepopup.tscn")
 var chatall = preload("res://scenes/show/chatall/spawn_chat_names.tscn")
 var whale
-
+var command_cost = {
+	"attack": 0.0,
+	"heal": 10.0,
+	"speak": 31.0,
+	"speakeng": 20.0,
+	"sa": 999999.0,
+}
 var command_cooldowns = {
 	"attack": 10.0,
 	"heal": 1.0,
@@ -27,9 +34,12 @@ func gotMessage(msg):
 			var command = data[1]
 			var arg = data[2]
 			checkRegisterPlayer(sender)
+			if !payCommandCost(sender, command):
+				return sender+" you need "+str(command_cost[command])+"$ to "+command
 			match command:
 				"sa":
 					popup("as "+sender)
+					return "as "+sender
 				"attack":
 					if isOnCooldown(sender, "attack"):
 						return sender+", wait before "+command
@@ -50,8 +60,17 @@ func gotMessage(msg):
 					return shopBuy(sender, arg)
 				"res":
 					return resWhale(sender)
+				"dice":
+					var args = arg.split(" ", 2)
+					return askDice(sender, args[0], int(args[1]))
+				"accept":
+					return acceptDice(sender)
 				"reisler":
-					return sort_players_by_coins()
+					return get_top_players()
+				"speak":
+					return "ok"
+				"speakeng":
+					return "ok"
 		2:
 			#pass datac
 			var tag = data[0]
@@ -85,6 +104,42 @@ func strtoArray(s: String) -> Array:
 	
 	return result_array
 
+
+# Function to initiate dice roll request
+func askDice(player, to, amount):
+	if players.has(to) and players.has(player):
+		if players[player]["coin"] >= amount:
+			pending_dices[to] = [{"from": player, "amount": amount}]
+			return player+" has asked "+to+" for a dice roll of "+str(amount)+" coins. Type !accept to accept."
+		else:
+			return player+" does not have enough coins."
+	return "Invalid player."
+
+# Function to accept dice roll request and perform the roll
+func acceptDice(player):
+	if pending_dices.has(player) and pending_dices[player].size()>0:
+		var amount = pending_dices[player][0]["amount"]
+		var from_player = pending_dices[player][0]["from"]
+		if players[player]["coin"] >= amount:
+			if players[from_player]["coin"] >= amount:
+				var roll1 = randi() % 6 + 1
+				var roll2 = randi() % 6 + 1
+				var winner = ""
+				if roll1 > roll2:
+					winner = from_player
+				elif roll2 > roll1:
+					winner = player
+				else:
+					return "It's a tie!"
+				players[from_player if winner == player else player]["coin"] -= amount
+				pickupCoin(winner, amount * 2)
+				pending_dices.erase(player) # sadece atılan ilk istek de silinebilir.
+				return from_player+" rolled "+str(roll1)+", "+player+" rolled "+str(roll2)+". "+winner+" wins "+str(amount * 2)+" coins!"
+			return from_player+" does not have enough coins to accept the dice roll."
+		return player+" does not have enough coins to accept the dice roll."
+	return "No pending dice request."
+
+
 func playSong(player, playing):
 	var multiplier = players[player]["upgrades"]["play"]
 	var playLevel = players[player]["level"] * multiplier
@@ -112,18 +167,22 @@ func playerAttack(player):
 	return player + " popped " + str(destroyed) + " enemies. Got " + str(getGold) + " gold and " + str(gotExp) + " exp."
 
 func playerHeal(player):
+	if whale.dead:
+		return "Please revive the holy whale using !res"
 	var playerLevel = players[player]["level"]
 	var multiplier = players[player]["upgrades"]["heal"]
-	var healLevel = playerLevel * multiplier
+	var healLevel = playerLevel * multiplier * 15
 	var healamount = 100 * healLevel
 	fadePopup(player+" cansın")
-	whale.anim.play("Fall")
+	whale.anim.play("Attack")
 	whale.healWhale(healamount)
+	Audioload.play("heal")
 	pickupCoin(player, healLevel)
-	return str(healamount)+" can bastın ve "+str(healLevel)+" para kastın."
+	return "Healed for "+str(healamount)+" and got "+str(healLevel)+"$."
 
 func resWhale(player):
 	if whale.dead:
+		Audioload.play("res")
 		whale.hp = whale.maxhp
 		whale.dead = false
 		whale.anim.play("Idle")
@@ -137,7 +196,7 @@ func pickupCoin(player, amount = 1):
 	var coin = cps.instantiate()
 	add_child(coin)
 	Speak.text("respect "+player)
-	fadePopup(player + " " + str(players[player]["coin"]) + "$", true)
+	fadePopup(player + " " + str(round(players[player]["coin"])) + "$", true)
 
 func getExp(player, amount = 1):
 	var multiplier = players[player]["upgrades"]["exp"]
@@ -172,6 +231,19 @@ func shopBuy(player, item):
 			return player+" bought "+item
 		return "You need "+str(shopItems[item] - players[player]["coin"])+" more gold to buy "+item+"."
 	return str(shopItems)
+
+func drawCoins(player, amount):
+	if players[player]["coin"] >= amount:
+		players[player]["coin"] -= amount
+		return true
+	return false
+
+func payCommandCost(player, command):
+	if !command_cost.has(command):
+		return true
+	if drawCoins(player, command_cost[command]):
+		return true
+	return false
 
 func checkRegisterPlayer(player):
 	#player stats
@@ -208,28 +280,30 @@ func updateCooldown(sender: String, command: String):
 
 
 func popup(text):
-	var popup = popupscene.instantiate()
-	popup.text = text
-	add_child(popup)
+	var pop = popupscene.instantiate()
+	pop.text = text
+	add_child(pop)
 
 func fadePopup(text, below = false):
-	var popup = fadepopupscene.instantiate()
-	popup.text = text
-	popup.below = below
-	add_child(popup)
+	var pop = fadepopupscene.instantiate()
+	pop.text = text
+	pop.below = below
+	add_child(pop)
 
 func userSubscribed(user):
 	Speak.text("Welcome "+user+" adamsın")
 
-func compare(a, b):
-		return b["coin"] - a["coin"]
-
-func sort_players_by_coins():
-	var player_keys = players.keys()
-	player_keys.sort_custom(compare)
+func get_top_players() -> String:
+	var player_names = players.keys()
 	
-	var sorted_players = {}
-	for key in player_keys:
-		sorted_players[key] = players[key]
-		
-	return str(sorted_players.keys())
+	# Sort player names by coins in descending order
+	player_names.sort_custom(sort_by_coins)
+	
+	# Reverse the array to get it in descending order
+	player_names.reverse()
+	
+	# Return top 5 players
+	return str(player_names.slice(0, 4))
+
+func sort_by_coins(a, b):
+	return players[a]["coin"] - players[b]["coin"]

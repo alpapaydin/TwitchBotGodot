@@ -164,6 +164,7 @@ _data = {
 }
 
 [node name="Popup" type="PanelContainer"]
+modulate = Color(1, 1, 1, 0)
 offset_left = -200.0
 offset_top = -180.0
 offset_right = 200.0
@@ -194,7 +195,6 @@ modulate = Color(1, 1, 1, 0.360784)
 texture_filter = 1
 layout_mode = 2
 texture = SubResource("AtlasTexture_xjor6")
-stretch_mode = 4
 metadata/_aseprite_wizard_config_ = {
 "keep_anim_length": false,
 "layer": "",
@@ -218,7 +218,6 @@ z_index = -2
 texture_filter = 1
 layout_mode = 2
 texture = SubResource("AtlasTexture_drqhs")
-stretch_mode = 4
 metadata/_aseprite_wizard_config_ = {
 "keep_anim_length": false,
 "layer": "",

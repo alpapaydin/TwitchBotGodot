@@ -67,9 +67,22 @@ tracks/4/keys = {
 "update": 1,
 "values": [31, 32, 32, 33, 33, 34, 34, 35, 36, 36, 30]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_418vk"]
 length = 0.2
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -195,8 +208,8 @@ tracks/4/keys = {
 }
 
 [sub_resource type="Animation" id="Animation_fxpoq"]
-length = 0.333
-loop_mode = 1
+length = 0.2
+loop_mode = 2
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -383,6 +396,18 @@ tracks/4/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
 "values": [43, 43, 43, 44, 45, 45, 46]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath(".:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Color(0.305882, 0.305882, 0.305882, 1), Color(0.227451, 0, 0.188235, 1), Color(1, 1, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_js621"]
@@ -750,7 +775,7 @@ scale = Vector2(6, 6)
 texture = ExtResource("2_j3ogf")
 hframes = 8
 vframes = 7
-frame = 50
+frame = 30
 metadata/_aseprite_wizard_config_ = {
 "keep_anim_length": false,
 "layer": "",
