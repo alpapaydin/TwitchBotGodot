@@ -110,7 +110,7 @@ class Bot(commands.Bot):
     
     @commands.command()
     async def gamehelp(self, ctx: commands.Context):
-        await ctx.send(f'!help, !stats, !attack, !heal, !res, !buy (item), !upgrade (stat), !dice (player) (amount), !accept, !reisler')
+        await ctx.send(f'!help, !stats, !biz, !attack, !heal, !res, !buy (item), !upgrade (stat), !dice (player) (amount), !accept, !reisler')
     @commands.command()
     async def help(self, ctx: commands.Context):
         await ctx.send(f'!gamehelp, !sa, !dc, !fw, !speak (mesaj), !speakeng (msg), !play (arama), !stop, !chatall, !chat, !vsgel')
@@ -151,6 +151,16 @@ class Bot(commands.Bot):
         await ctx.send(response)
     @commands.command()
     async def dice(self, ctx: commands.Context, *, message: str = "Default message"):
+        sendData = f"{ctx.author.name}.{ctx.command.name}.{message}"
+        response = await self.send_websocket_message(sendData)
+        await ctx.send(response)
+    @commands.command()
+    async def biz(self, ctx: commands.Context, *, message: str = "Default message"):
+        sendData = f"{ctx.author.name}.{ctx.command.name}.{message}"
+        response = await self.send_websocket_message(sendData)
+        await ctx.send(response)
+    @commands.command()
+    async def donate(self, ctx: commands.Context, *, message: str = "Default message"):
         sendData = f"{ctx.author.name}.{ctx.command.name}.{message}"
         response = await self.send_websocket_message(sendData)
         await ctx.send(response)  

@@ -33,3 +33,12 @@ layout_mode = 2
 [node name="enemies" type="Node2D" parent="."]
 script = ExtResource("5_nbjdi")
 enemy_scene = ExtResource("6_bf15p")
+
+[node name="interestTimer" type="Timer" parent="."]
+autostart = true
+
+[node name="incomeTimer" type="Timer" parent="."]
+autostart = true
+
+[connection signal="timeout" from="interestTimer" to="." method="_on_timer_timeout"]
+[connection signal="timeout" from="incomeTimer" to="." method="_on_incometimer_timeout"]

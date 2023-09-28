@@ -1,14 +1,27 @@
 extends Node
 
-var players = {}
-var sender_command_cooldowns = {}
-var pending_dices = {}  # Store pending dice requests
-var shopItems = {"maserati": 4500, "adidas esofman takimi": 3100, "kozmetik":315}
+
+var shopItems = {
+	"maserati": 4500,
+	"adidas esofman takimi": 3100,
+	"kozmetik":315
+	}
+	
+var businesses = {
+	"seo ajansi": {"startup_price": 100, "min_level": 1},
+	"camgirl subesi": {"startup_price": 500, "min_level": 2},
+	"taksi duragi": {"startup_price": 1000, "min_level": 3},
+	"telefoncu": {"startup_price": 5000, "min_level": 4},
+	"nargile cafe": {"startup_price": 10000, "min_level": 5}
+}
+
+	#scenes
 var cps = preload("res://scenes/show/vfx/coinpickup/coin.tscn")
 var popupscene = preload("res://scenes/show/singlepopup/popup.tscn")
 var fadepopupscene = preload("res://scenes/show/fadepopup/fadepopup.tscn")
 var chatall = preload("res://scenes/show/chatall/spawn_chat_names.tscn")
-var whale
+var dicebattle = preload("res://scenes/show/dicebattle/dicebattle.tscn")
+
 var command_cost = {
 	"attack": 0.0,
 	"heal": 10.0,
@@ -22,6 +35,29 @@ var command_cooldowns = {
 	"command3": 3.0,
 }
 
+var whale
+var players = {}
+var sender_command_cooldowns = {}
+var pending_dices = {}  # Store pending dice requests
+
+func checkRegisterPlayer(player):
+	#player stats
+	if !players.has(player):
+		players[player] = {
+			"coin": 1,
+			"level": 1,
+			"exp": 0,
+			"items": {},
+			"businesses": {},
+			"upgrades": {
+				"play": 1.0,
+				"heal": 1.0,
+				"attack": 1.0,
+				"exp": 1.0,
+				"bank": 1.0,
+			}
+		}
+		
 #RECEIVE FROM TWITCH BOT
 func gotMessage(msg):
 	var data = msg.split(".", 2)
@@ -62,14 +98,32 @@ func gotMessage(msg):
 				"dice":
 					var args = arg.split(" ", 2)
 					return askDice(sender, args[0], int(args[1]))
+				"donate":
+					var args = arg.split(" ", 2)
+					return sendCoins(sender, args[0], int(args[1]))
 				"accept":
 					return acceptDice(sender)
 				"reisler":
-					return get_top_players()
+					return get_top_players("coin")
 				"speak":
 					return "ok"
 				"speakeng":
 					return "ok"
+				"biz":
+					var args = arg.split(" ")
+					var sub_command = args[0]
+					var businessName = ""
+					for i in range(1, args.size()):
+						businessName += args[i] + " "
+					businessName = businessName.strip_edges()  # Remove trailing spaces
+					
+					match sub_command:
+						"buy", "sell", "upgrade", "info":
+							return handleBusinessCommand(sender, sub_command, businessName)
+						"list":
+							return listBusinesses()
+						_:
+							return "!biz list, !biz buy (name), !biz sell (name), !biz upgrade(name), !biz info (name)"
 		2:
 			#pass datac
 			var tag = data[0]
@@ -103,7 +157,108 @@ func strtoArray(s: String) -> Array:
 	
 	return result_array
 
+###BUSINESS
+# Initialize businesses for players
+func initBusinesses():
+	for player in players.keys():
+		players[player]["businesses"] = {}
 
+# Function to list all available businesses
+func listBusinesses():
+	var business_list_str = "Available Businesses:\n"
+	for businessName in businesses.keys():
+		var business = businesses[businessName]
+		business_list_str += "//" + businessName + " (Startup Price: " + str(business["startup_price"]) + ", Min Level: " + str(business["min_level"]) + ")/"
+	return business_list_str
+
+# Function to handle business commands that require a business name
+func handleBusinessCommand(player, sub_command, businessName):
+	if businessName == "":
+		return "Please specify a business to " + sub_command + "."
+	match sub_command:
+		"buy":
+			return buyBusiness(player, businessName)
+		"sell":
+			return sellBusiness(player, businessName)
+		"reinvest":
+			return reinvestBusiness(player, businessName)
+		"info":
+			return businessInfo(player, businessName)
+
+# Buy a business
+func buyBusiness(player, businessName):
+	print(businessName)
+	if businesses.has(businessName):
+		if !players[player]["businesses"].has(businessName):
+			var business = businesses[businessName]
+			if players[player]["level"] >= business["min_level"]:
+				if players[player]["coin"] >= business["startup_price"]:
+					players[player]["coin"] -= business["startup_price"]
+					players[player]["businesses"][businessName] = {"level": 1}
+					return player + " bought " + businessName
+				return "Not enough money."
+			return "Level too low."
+		return "You already own this business type. Use !biz info"
+	return "Invalid business name."
+
+# Sell a business
+func sellBusiness(player, businessName):
+	if players[player]["businesses"].has(businessName):
+		var sell_price = 100  # Example
+		players[player]["coin"] += sell_price
+		players[player]["businesses"].erase(businessName)
+		return player + " sold " + businessName
+	return "You don't own this business."
+
+# Reinvest in business
+func reinvestBusiness(player, businessName):
+	if players[player]["businesses"].has(businessName):
+		var upgrade_cost = calculateUpgradeCost(player, businessName)
+		if players[player]["coin"] >= upgrade_cost:
+			players[player]["coin"] -= upgrade_cost
+			players[player]["businesses"][businessName]["level"] += 1
+			return player + " upgraded " + businessName
+		else:
+			return "Not enough money."
+	return "You don't own this business."
+
+# Business info
+func businessInfo(player, businessName):
+	if players[player]["businesses"].has(businessName):
+		var level = players[player]["businesses"][businessName]["level"]
+		var upgrade_cost = calculateUpgradeCost(player, businessName)
+		var income = calculateIncome(player, businessName)
+		return businessName + " Info: [Level: " + str(level) + ", Upgrade Cost: " + str(upgrade_cost) + ", Periodic Yield: " + str(income) + "]"
+	return "You don't own this business."
+
+# Calculate upgrade cost
+func calculateUpgradeCost(player, businessName):
+	if players[player]["businesses"].has(businessName):
+		var level = players[player]["businesses"][businessName]["level"]
+		var base_cost = businesses[businessName]["startup_price"]
+		var upgrade_cost = base_cost * pow(1.15, level)
+		return int(upgrade_cost)
+	return 0  # Placeholder
+
+# Calculate income
+func calculateIncome(player, businessName):
+	if players[player]["businesses"].has(businessName):
+		var level = players[player]["businesses"][businessName]["level"]
+		var base_yield = businesses[businessName]["startup_price"] * 0.1
+		var income = base_yield * pow(1.07, level)
+		return int(income)
+	return 0  # Placeholder
+
+# Connected to the Timer's timeout signal
+func _on_IncomeTimer_timeout():
+	for player in players.keys():
+		var total_income = 0
+		for businessName in players[player]["businesses"].keys():
+			var income = calculateIncome(player, businessName)
+			total_income += income
+		players[player]["coin"] += total_income
+
+###DICE
 # Function to initiate dice roll request
 func askDice(player, to, amount):
 	if players.has(to) and players.has(player):
@@ -123,6 +278,7 @@ func acceptDice(player):
 			if players[from_player]["coin"] >= amount:
 				var roll1 = randi() % 6 + 1
 				var roll2 = randi() % 6 + 1
+				diceBattle(from_player, player, roll1, roll2)
 				var winner = ""
 				if roll1 > roll2:
 					winner = from_player
@@ -131,13 +287,21 @@ func acceptDice(player):
 				else:
 					return "It's a tie!"
 				players[from_player if winner == player else player]["coin"] -= amount
-				pickupCoin(winner, amount * 2)
+				pickupCoin(winner, amount)
 				pending_dices.erase(player) # sadece atılan ilk istek de silinebilir.
 				return from_player+" rolled "+str(roll1)+", "+player+" rolled "+str(roll2)+". "+winner+" wins "+str(amount * 2)+" coins!"
 			return from_player+" does not have enough coins to accept the dice roll."
 		return player+" does not have enough coins to accept the dice roll."
 	return "No pending dice request."
 
+
+func diceBattle(attacker, defender, atkrol, defrol):
+	var diceinstance = dicebattle.instantiate()
+	diceinstance.attacker = attacker
+	diceinstance.defender = defender
+	diceinstance.atkrol = atkrol
+	diceinstance.defrol = defrol
+	add_child(diceinstance)
 
 func playSong(player, playing):
 	var multiplier = players[player]["upgrades"]["play"]
@@ -151,7 +315,7 @@ func playerStats(sender):
 	var toNextLevel =  pow(players[sender]["level"], 2) * 31
 	var stats = "
 	Player: "+sender+"
-	Cash: "+str(round(players[sender]["coin"]))+"$, 
+	Cash: "+str(floor(players[sender]["coin"]))+"$, 
 	Level: "+str(players[sender]["level"])+", 
 	Exp: "+str(round(players[sender]["exp"]))+"/"+str(toNextLevel)+"."
 	return stats
@@ -231,6 +395,13 @@ func shopBuy(player, item):
 		return "You need "+str(shopItems[item] - players[player]["coin"])+" more gold to buy "+item+"."
 	return str(shopItems)
 
+func sendCoins(from, to, amount):
+	if players[from]["coin"] >= amount:
+		players[from]["coin"] -= amount
+		players[to]["coin"] += amount
+		return from+" donated "+to+" "+str(amount)
+	return from+" fakirsin."
+
 func drawCoins(player, amount):
 	if players[player]["coin"] >= amount:
 		players[player]["coin"] -= amount
@@ -243,22 +414,6 @@ func payCommandCost(player, command):
 	if drawCoins(player, command_cost[command]):
 		return true
 	return false
-
-func checkRegisterPlayer(player):
-	#player stats
-	if !players.has(player):
-		players[player] = {
-			"coin": 1,
-			"level": 1,
-			"exp": 0,
-			"items": {},
-			"upgrades": {
-				"play": 1.0,
-				"heal": 1.0,
-				"attack": 1.0,
-				"exp": 1.0,
-			}
-		}
 
 #Cooldown
 # Function to check if a command is on cooldown for a sender
@@ -277,6 +432,9 @@ func updateCooldown(sender: String, command: String):
 		sender_command_cooldowns[sender] = {}
 	sender_command_cooldowns[sender][command] = current_time
 
+func addInterest():
+	for player in players:
+		players[player]["coin"] += players[player]["coin"]*players[player]["upgrades"]["bank"] / 10000
 
 func popup(text):
 	var pop = popupscene.instantiate()
@@ -292,17 +450,32 @@ func fadePopup(text, below = false):
 func userSubscribed(user):
 	Speak.text("Welcome "+user+" adamsın")
 
-func get_top_players() -> String:
-	var player_names = players.keys()
-	
-	# Sort player names by coins in descending order
-	player_names.sort_custom(sort_by_coins)
-	
-	# Reverse the array to get it in descending order
-	player_names.reverse()
-	
-	# Return top 5 players
-	return str(player_names.slice(0, 4))
+var selectedstat
 
-func sort_by_coins(a, b):
-	return players[a]["coin"] - players[b]["coin"]
+func get_top_players(stat_tag: String) -> String:
+	selectedstat = stat_tag
+	var sorted_players: Array = []
+
+	# Create an array of dictionaries with 'playername' and the specific stat
+	for player in players.keys():
+		var dict_entry: Dictionary = {
+			"playername": player,
+			selectedstat: players[player][stat_tag]
+		}
+		sorted_players.append(dict_entry)
+
+	# Sort the array in descending order based on the selected stat
+	sorted_players.sort_custom(compare_stats_desc)
+	sorted_players.reverse()
+	return str(sorted_players)
+
+# Custom comparison function for sorting in descending order
+func compare_stats_desc(a: Dictionary, b: Dictionary) -> int:
+	var diff = float(b[selectedstat]) - float(a[selectedstat])
+	if diff > 0.0:
+		return -1
+	elif diff < 0.0:
+		return 1
+	else:
+		return 0
+

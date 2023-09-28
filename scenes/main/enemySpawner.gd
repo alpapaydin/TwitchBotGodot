@@ -14,7 +14,7 @@ func _ready():
 	spawnTimer.wait_time = 2
 	spawnTimer.connect("timeout", spawn_enemy)
 	add_child(spawnTimer)
-	helpTimer.wait_time = 5
+	helpTimer.wait_time = 3
 	helpTimer.connect("timeout", help)
 	add_child(helpTimer)
 	spawnTimer.start()
