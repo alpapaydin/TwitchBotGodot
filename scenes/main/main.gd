@@ -21,4 +21,5 @@ func _on_timer_timeout():
 
 
 func _on_incometimer_timeout():
+	Saver._save()
 	Twitch._on_IncomeTimer_timeout()

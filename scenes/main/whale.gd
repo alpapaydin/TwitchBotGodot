@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var hp = 31313.0
+var hp = 3131313.1
 var maxhp = hp
 var dead = false
 var is_dragging: bool = false
@@ -12,6 +12,7 @@ var click_pos = Vector2.ZERO
 @onready var anim = $Sprite2D/AnimationPlayer
 @onready var window = get_window()
 @onready var sprite = $Sprite2D
+@onready var help = $helpTimer
 
 func _ready():
 	Twitch.whale = self
@@ -23,7 +24,12 @@ func _ready():
 
 func _process(_delta):
 	if dead:
+		if help.is_stopped():
+			help.start()
+		if !anim.is_playing():
+			anim.play("Fall")
 		return
+	help.stop()
 	if !anim.is_playing():
 		anim.play("Idle")
 	else:
@@ -39,7 +45,9 @@ func _process(_delta):
 		click_pos = get_local_mouse_position()
 	if Input.is_action_pressed("click"):
 		window.position += Vector2i(get_global_mouse_position() - click_pos)
-
+		
+func resMe():
+	Twitch.popup("!res")
 
 func attackPulse(radius, _damage, effect):
 	var destroyed = 0
@@ -99,4 +107,4 @@ func flipandmove():
 func _on_animation_player_animation_finished(anim_name):
 	match anim_name:
 		"Dead Hit":
-			anim.play("Dead Ground")
+			anim.play("Fall")

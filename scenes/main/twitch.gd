@@ -180,7 +180,7 @@ func handleBusinessCommand(player, sub_command, businessName):
 			return buyBusiness(player, businessName)
 		"sell":
 			return sellBusiness(player, businessName)
-		"reinvest":
+		"upgrade":
 			return reinvestBusiness(player, businessName)
 		"info":
 			return businessInfo(player, businessName)
@@ -359,7 +359,7 @@ func pickupCoin(player, amount = 1):
 	var coin = cps.instantiate()
 	add_child(coin)
 	Speak.text("respect "+player)
-	fadePopup(player + " " + str(round(players[player]["coin"])) + "$", true)
+	fadePopup(player + " " + str(round(players[player]["coin"])) + "$", true, player)
 
 func getExp(player, amount = 1):
 	var multiplier = players[player]["upgrades"]["exp"]
@@ -441,10 +441,12 @@ func popup(text):
 	pop.text = text
 	add_child(pop)
 
-func fadePopup(text, below = false):
+func fadePopup(text, below = false, player = null):
 	var pop = fadepopupscene.instantiate()
 	pop.text = text
 	pop.below = below
+	if player:
+		pop.player = player
 	add_child(pop)
 
 func userSubscribed(user):

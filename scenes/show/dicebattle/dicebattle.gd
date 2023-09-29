@@ -19,6 +19,5 @@ func _on_dice_timer_timeout():
 	defenderdice.get_node("AnimationPlayer").play(str(defrol))
 	$destroyTimer.start()
 
-
 func _on_destroy_timer_timeout():
 	queue_free()

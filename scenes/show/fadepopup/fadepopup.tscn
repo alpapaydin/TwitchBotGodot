@@ -1,7 +1,7 @@
 [gd_scene load_steps=24 format=3 uid="uid://c44pp8ugyrr4x"]
 
 [ext_resource type="Script" path="res://scenes/show/fadepopup/fadepopup.gd" id="1_fxy3g"]
-[ext_resource type="FontFile" uid="uid://en3gsaq6lik7" path="res://asset/font/Montserrat-Medium.ttf" id="2_c8bc4"]
+[ext_resource type="FontFile" uid="uid://traj52d5abna" path="res://asset/font/joystix monospace.otf" id="2_8r2l3"]
 [ext_resource type="AudioStream" uid="uid://0hik7ibdhovg" path="res://asset/sfx/pop.ogg" id="3_6j7c8"]
 [ext_resource type="Texture2D" uid="uid://boiib2cn0bi46" path="res://scenes/show/fadepopup/MonedaD.png" id="4_13ve4"]
 [ext_resource type="Texture2D" uid="uid://cjp43kawbeae5" path="res://scenes/show/fadepopup/heart2.png" id="4_ehd2l"]
@@ -174,8 +174,8 @@ script = ExtResource("1_fxy3g")
 
 [node name="PopupText" type="Label" parent="."]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("2_c8bc4")
-theme_override_font_sizes/font_size = 35
+theme_override_fonts/font = ExtResource("2_8r2l3")
+theme_override_font_sizes/font_size = 27
 text = "saol remzikral"
 horizontal_alignment = 1
 vertical_alignment = 1

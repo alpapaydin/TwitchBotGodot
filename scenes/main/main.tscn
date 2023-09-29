@@ -38,6 +38,7 @@ enemy_scene = ExtResource("6_bf15p")
 autostart = true
 
 [node name="incomeTimer" type="Timer" parent="."]
+wait_time = 10.0
 autostart = true
 
 [connection signal="timeout" from="interestTimer" to="." method="_on_timer_timeout"]

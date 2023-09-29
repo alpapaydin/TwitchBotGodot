@@ -5,10 +5,6 @@ var path = "user://data.tres"
 func _ready():
 	_load()
 
-func _process(_delta):
-	if Input.is_action_just_pressed("altf4"):
-		_save()
-
 func _notification(what):
 	if what == NOTIFICATION_WM_CLOSE_REQUEST:
 		_save()
@@ -17,7 +13,7 @@ func _save():
 	var saveResource = preload("res://scenes/main/save/SaveRes.tres")
 	saveResource.playerData = Twitch.players
 	ResourceSaver.save(saveResource, path)
-	print("saved game")
+	#print("saved game")
 	return saveResource
 
 func _load():

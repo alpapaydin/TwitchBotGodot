@@ -2,6 +2,11 @@ extends PanelContainer
 
 var text
 var below = false
+var player = null
+
+func _process(_delta):
+	if player:
+		$PopupText.text = player + " " + str(round(Twitch.players[player]["coin"])) + "$"
 
 func _ready():
 	$PopupText.text = text
