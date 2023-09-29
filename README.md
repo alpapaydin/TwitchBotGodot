@@ -68,7 +68,7 @@ An interactive Twitch Chatbot built using Godot and Python TwitchIO. Designed to
 
 - Godot Engine
 - Python 3.x
-- Twitch account with developer access for API [tokens](https://twitchtokengenerator.com/)
+- Twitch account with developer access for API [tokens](https://twitchtokengenerator.com/) (OAuth Forward URL http://localhost:18297)
 
 ### Steps
 
