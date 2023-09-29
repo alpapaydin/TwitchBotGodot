@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dk5dxxpipcvql"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_2460s"]
-[ext_resource type="Script" path="res://scenes/main/WebSocket.gd" id="3_djldm"]
 [ext_resource type="PackedScene" uid="uid://mc7kyf5tg1x0" path="res://scenes/whale/whale.tscn" id="3_upha2"]
 [ext_resource type="Script" path="res://scenes/main/enemySpawner.gd" id="5_nbjdi"]
+[ext_resource type="Script" path="res://scenes/main/youtube.gd" id="5_v5p80"]
 [ext_resource type="PackedScene" uid="uid://03hc1p1xva83" path="res://scenes/enemies/enemybase/enemybase.tscn" id="6_bf15p"]
 
 [node name="main" type="Control"]
@@ -11,9 +11,6 @@ layout_mode = 3
 anchors_preset = 0
 mouse_filter = 2
 script = ExtResource("1_2460s")
-
-[node name="WebSocket" type="Node" parent="."]
-script = ExtResource("3_djldm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
@@ -40,6 +37,11 @@ autostart = true
 [node name="incomeTimer" type="Timer" parent="."]
 wait_time = 10.0
 autostart = true
+
+[node name="Node" type="Node" parent="."]
+script = ExtResource("5_v5p80")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node"]
 
 [connection signal="timeout" from="interestTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="incomeTimer" to="." method="_on_incometimer_timeout"]
