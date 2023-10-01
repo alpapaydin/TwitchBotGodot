@@ -31,9 +31,9 @@ func _ready() -> void:
 	subscribe_event("channel.follow", 2, {"broadcaster_user_id": user_id, "moderator_user_id": user_id})
 ###
 
-func unhandledMessage(message, tags):
-	#print("TEST::: "+message)
-	pass
+func unhandledMessage(message, _tags):
+	print("TEST::: "+message)
+
 
 var shopItems = {
 	"maserati": 4500,

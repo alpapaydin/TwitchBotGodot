@@ -14,10 +14,8 @@ func _input(_event):
 	if Input.is_action_pressed("click"):
 		window.position += Vector2i(get_global_mouse_position() - click_pos)
 
-
 func _on_timer_timeout():
 	Twitch.addInterest()
-
 
 func _on_incometimer_timeout():
 	Saver._save()

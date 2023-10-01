@@ -35,7 +35,7 @@ def download_first_audio(URL):
     # Options for yt-dlp
     ydl_opts = {
     'format': 'm4a/bestaudio/best',
-    'outtmpl': 'asset/twitch/music',
+    'outtmpl': 'music',
     # ℹ️ See help(yt_dlp.postprocessor) for a list of available Postprocessors and their arguments
     'postprocessors': [{  # Extract audio using ffmpeg
         'key': 'FFmpegExtractAudio',
@@ -59,7 +59,7 @@ def download_audio_from_query(query):
 
 class Bot(commands.Bot):
     def __init__(self):
-        super().__init__(token=token, prefix='!', initial_channels=[channelname])
+        super().__init__(token=token, prefix='!', initial_channels=['basitgaming'])
         
     async def event_ready(self):
         # We are logged in and ready to chat and use commands...
@@ -110,7 +110,7 @@ class Bot(commands.Bot):
     
     @commands.command()
     async def gamehelp(self, ctx: commands.Context):
-        await ctx.send(f'!help, !stats, !biz, !attack, !heal, !res, !buy (item), !upgrade (stat), !dice (player) (amount), !accept, !reisler')
+        await ctx.send(f'!help, !stats, !attack, !heal, !res, !buy (item), !upgrade (stat), !dice (player) (amount), !accept, !reisler')
     @commands.command()
     async def help(self, ctx: commands.Context):
         await ctx.send(f'!gamehelp, !sa, !dc, !fw, !speak (mesaj), !speakeng (msg), !play (arama), !stop, !chatall, !chat, !vsgel')
@@ -153,16 +153,6 @@ class Bot(commands.Bot):
     async def dice(self, ctx: commands.Context, *, message: str = "Default message"):
         sendData = f"{ctx.author.name}.{ctx.command.name}.{message}"
         response = await self.send_websocket_message(sendData)
-        await ctx.send(response)
-    @commands.command()
-    async def biz(self, ctx: commands.Context, *, message: str = "Default message"):
-        sendData = f"{ctx.author.name}.{ctx.command.name}.{message}"
-        response = await self.send_websocket_message(sendData)
-        await ctx.send(response)
-    @commands.command()
-    async def donate(self, ctx: commands.Context, *, message: str = "Default message"):
-        sendData = f"{ctx.author.name}.{ctx.command.name}.{message}"
-        response = await self.send_websocket_message(sendData)
         await ctx.send(response)  
     @commands.command()
     async def buy(self, ctx: commands.Context, *, message: str = "Default message"):
@@ -181,7 +171,7 @@ class Bot(commands.Bot):
         if not await self.is_user_subscribed_for(ctx.author.id, ctx.author.name, MINUTES_REQUIRED):
             await ctx.send(f"Sorry {ctx.author.name}, you need to be subscribed for at least {MINUTES_REQUIRED} minutes to use this command.")
             return
-        sound = pygame.mixer.Sound("asset/sfx/shake.ogg")
+        sound = pygame.mixer.Sound("sfx/shake.ogg")
         sfxchannel.play(sound)
         await ctx.send("anayn")
     @commands.command()
@@ -210,8 +200,8 @@ class Bot(commands.Bot):
             await ctx.send(response)
             return
         speech = gTTS(text=search, lang='tr', slow=False)
-        speech.save("asset/twitch/play.mp3")
-        sound = pygame.mixer.Sound("asset/twitch/play.mp3")
+        speech.save("play.mp3")
+        sound = pygame.mixer.Sound("play.mp3")
         sfxchannel.play(sound)
         await ctx.send(f'Now playing: {search}')
     @commands.command()
@@ -222,8 +212,8 @@ class Bot(commands.Bot):
             await ctx.send(response)
             return
         speech = gTTS(text=search, lang='en', slow=False)
-        speech.save("asset/twitch/play.mp3")
-        sound = pygame.mixer.Sound("asset/twitch/play.mp3")
+        speech.save("play.mp3")
+        sound = pygame.mixer.Sound("play.mp3")
         sfxchannel.play(sound)
         await ctx.send(f'Now playing: {search}')
     @commands.command()
@@ -236,7 +226,7 @@ class Bot(commands.Bot):
     async def fw(self, ctx: commands.Context):
         user = self.create_user(self.user_id, self.nick)
         followers = await user.fetch_channel_followers(token)
-        print(followers)
+        #print(followers)
         random_follower = random.choice(followers)
         await ctx.send(f"respect @{random_follower.user.name}")
     @commands.command()
@@ -254,7 +244,7 @@ class Bot(commands.Bot):
             return
         if bgmchannel.get_busy() == False:
             queryresult = download_audio_from_query(search)
-            sound = pygame.mixer.Sound("asset/twitch/music.mp3")
+            sound = pygame.mixer.Sound("music.mp3")
             bgmchannel.play(sound)
             
             try:
