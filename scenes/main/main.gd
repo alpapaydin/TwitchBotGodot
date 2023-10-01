@@ -22,24 +22,3 @@ func _on_timer_timeout():
 func _on_incometimer_timeout():
 	Saver._save()
 	Twitch._on_IncomeTimer_timeout()
-	
-	if not YtDlp.is_setup():
-		YtDlp.setup()
-		await YtDlp.setup_completed
-
-	var download := YtDlp.download("https://youtu.be/Ya5Fv6VTLYM") \
-			.set_destination("user://audio/") \
-			.set_file_name("ok_computer") \
-			.convert_to_audio(YtDlp.Audio.MP3) \
-			.start()
-
-	await download.download_completed
-
-	var stream = AudioStreamMP3.new()
-	var audio_file = FileAccess.open("user://audio/ok_computer.mp3", FileAccess.READ)
-
-	stream.data = audio_file.get_buffer(audio_file.get_length())
-	audio_file.close()
-
-	$AudioStreamPlayer.stream = stream
-	$AudioStreamPlayer.play()

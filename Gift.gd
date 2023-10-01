@@ -79,6 +79,7 @@ func _ready() -> void:
 #	whisper("TEST", initial_channel)
 
 func on_event(type : String, data : Dictionary) -> void:
+	print("EVENT: "+ type)
 	match(type):
 		"channel.follow":
 			print("%s followed your channel!" % data["user_name"])

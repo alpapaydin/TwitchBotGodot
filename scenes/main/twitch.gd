@@ -4,7 +4,7 @@ func _ready() -> void:
 	cmd_no_permission.connect(no_permission)
 	chat_message.connect(on_chat)
 	event.connect(on_event)
-
+	unhandled_message.connect(unhandledMessage)
 	# I use a file in the working directory to store auth data
 	# so that I don't accidentally push it to the repository.
 	# Replace this or create a auth file with 3 lines in your
@@ -29,8 +29,11 @@ func _ready() -> void:
 	# what events exist, which API versions are available and which conditions are required.
 	# Make sure your token has all required scopes for the event.
 	subscribe_event("channel.follow", 2, {"broadcaster_user_id": user_id, "moderator_user_id": user_id})
-
 ###
+
+func unhandledMessage(message, tags):
+	#print("TEST::: "+message)
+	pass
 
 var shopItems = {
 	"maserati": 4500,
@@ -122,6 +125,8 @@ func gotMessage(msg):
 			if !payCommandCost(sender, command):
 				return sender+" you need "+str(command_cost[command])+"$ to "+command
 			match command:
+				"chatall":
+					chatAll(chatters)
 				"sa":
 					popup("as "+sender)
 					return "as "+sender
@@ -174,16 +179,12 @@ func gotMessage(msg):
 						"list":
 							return listBusinesses()
 						_:
-							return "!biz list, !biz buy (name), !biz sell (name), !biz upgrade(name), !biz info (name)"
+							return "Business Commands: !biz list, !biz buy (name), !biz sell (name), !biz upgrade(name), !biz info (name)"
 		2:
 			#pass datac
 			var tag = data[0]
 			var content = data[1]
 			match tag:
-				"chatterData":
-					var spawner = chatall.instantiate()
-					spawner.chatterData = strtoArray(content)
-					add_child(spawner)
 				"subscribed":
 					userSubscribed(content)
 		1:
@@ -192,6 +193,11 @@ func gotMessage(msg):
 				"newmessage":
 					whale.flipandmove()
 	return "OK"
+
+func chatAll(data):
+	var spawner = chatall.instantiate()
+	spawner.chatterData = data
+	add_child(spawner)
 
 func strtoArray(s: String) -> Array:
 	# Remove the outer brackets

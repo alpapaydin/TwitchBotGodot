@@ -27,7 +27,6 @@ Twitch="*res://scenes/main/twitch.gd"
 Speak="*res://scenes/main/tts.gd"
 Saver="*res://scenes/main/save/saver.gd"
 Audioload="*res://scenes/main/Audioload.gd"
-YtDlp="*res://addons/godot-yt-dlp/src/yt_dlp.gd"
 
 [display]
 
@@ -36,7 +35,7 @@ window/size/always_on_top=true
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/gift/plugin.cfg", "res://addons/godot-yt-dlp/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg")
+enabled=PackedStringArray("res://addons/AsepriteWizard/plugin.cfg", "res://addons/gift/plugin.cfg", "res://addons/ridiculous_coding/plugin.cfg")
 
 [gui]
 

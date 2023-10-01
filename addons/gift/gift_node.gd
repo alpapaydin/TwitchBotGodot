@@ -79,6 +79,8 @@ var chat_queue : Array[String] = []
 var last_msg : int = Time.get_ticks_msec()
 # Mapping of channels to their channel info, like available badges.
 var channels : Dictionary = {}
+
+var chatters : Array = []
 # Last Userstate of the bot for channels. Contains <channel_name> -> <userstate_dictionary> entries.
 var last_state : Dictionary = {}
 # Dictionary of commands, contains <command key> -> <Callable> entries.
@@ -623,6 +625,14 @@ func handle_message(message : String, tags : Dictionary) -> void:
 			whisper_message.emit(sender_data, msg[3].right(-1))
 		"RECONNECT":
 			twitch_restarting = true
+		"JOIN":
+			var joinname = msg[0].lstrip(":").split("!", true, 1)[0]
+			chatters.append(joinname)
+			print("JOIN: ",joinname)
+		"PART":
+			var partname = msg[0].lstrip(":").split("!", true, 1)[0]
+			chatters.erase(partname)
+			print("PART: ",partname)
 		"USERSTATE", "ROOMSTATE":
 			var room = msg[2].right(-1)
 			if (!last_state.has(room)):

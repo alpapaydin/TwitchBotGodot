@@ -1,7 +1,7 @@
 extends Node2D
 
 
-var hp = 3131313.1
+var hp = 313131.1
 var maxhp = hp
 var dead = false
 var is_dragging: bool = false
@@ -42,6 +42,7 @@ func _process(_delta):
 				window.position.y -= 0.01
 	if Input.is_action_just_pressed("click"):
 		anim.play("Swallow (Bomb)")
+		print(Twitch.chatters)
 		click_pos = get_local_mouse_position()
 	if Input.is_action_pressed("click"):
 		window.position += Vector2i(get_global_mouse_position() - click_pos)

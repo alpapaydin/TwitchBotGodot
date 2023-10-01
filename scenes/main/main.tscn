@@ -42,6 +42,7 @@ autostart = true
 script = ExtResource("5_v5p80")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node"]
+volume_db = -17.203
 
 [connection signal="timeout" from="interestTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="incomeTimer" to="." method="_on_incometimer_timeout"]

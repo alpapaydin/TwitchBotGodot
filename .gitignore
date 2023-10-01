@@ -1,4 +1,6 @@
 asset/twitch/music.mp3
+addons/AsepriteWizard/
+addons/ridiculous_coding/
 icon.svg.import
 .env
 # Godot 4+ specific ignores
