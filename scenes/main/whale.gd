@@ -42,6 +42,7 @@ func _process(_delta):
 				window.position.y -= 0.01
 	if Input.is_action_just_pressed("click"):
 		anim.play("Swallow (Bomb)")
+		sendFireball("basitgaming", 31)
 		print(Twitch.chatters)
 		click_pos = get_local_mouse_position()
 	if Input.is_action_pressed("click"):
@@ -75,7 +76,11 @@ func attackPulse(radius, _damage, effect):
 	add_child(vfx)
 	return destroyed
 	
-	
+func sendFireball(sender, _dmg):
+	var fireballScene = preload("res://scenes/whale/attacks/projectile.tscn")
+	var fireball = fireballScene.instantiate()
+	fireball.sender = sender
+	$mouthsocket.add_child(fireball)
 
 func getDamage(dmg):
 	hp -= dmg

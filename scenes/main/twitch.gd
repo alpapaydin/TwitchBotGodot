@@ -12,7 +12,7 @@ func _ready() -> void:
 	# <client_id>
 	# <client_secret>
 	# <initial channel>
-	var authfile := FileAccess.open("user://auth", FileAccess.READ)
+	var authfile := FileAccess.open("res://auth", FileAccess.READ)
 	client_id = authfile.get_line()
 	client_secret = authfile.get_line()
 	var initial_channel = authfile.get_line()
@@ -65,7 +65,7 @@ var command_cost = {
 var command_cooldowns = {
 	"attack": 10.0,
 	"heal": 1.0,
-	"command2": 10.0,
+	"fireball": 2.0,
 	"command3": 3.0,
 }
 
@@ -135,12 +135,17 @@ func gotMessage(msg):
 						return sender+", wait before "+command
 					updateCooldown(sender, "attack")
 					return playerAttack(sender)
+				"fireball":
+					if isOnCooldown(sender, "fireball"):
+						return sender+", wait before "+command
+					updateCooldown(sender, "fireball")
+					return playerFireball(sender)
 				"play":
 					return playSong(sender, arg)
 				"heal":
-					if isOnCooldown(sender, "attack"):
+					if isOnCooldown(sender, "heal"):
 						return "Cooldown..."
-					updateCooldown(sender, "attack")
+					updateCooldown(sender, "heal")
 					return playerHeal(sender)
 				"stats":
 					return playerStats(sender)
@@ -385,6 +390,11 @@ func playerAttack(player):
 	var gotExp = getExp(player, destroyed)
 	pickupCoin(player, getGold)
 	return player + " popped " + str(destroyed) + " enemies. Got " + str(getGold) + " gold and " + str(gotExp) + " exp."
+
+func playerFireball(player):
+	whale.sendFireball(player, 31)
+	return player + " sent a fireball."
+
 
 func playerHeal(player):
 	if whale.dead:

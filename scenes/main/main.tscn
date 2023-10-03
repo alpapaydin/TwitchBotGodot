@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://dk5dxxpipcvql"]
+[gd_scene load_steps=6 format=3 uid="uid://dk5dxxpipcvql"]
 
 [ext_resource type="Script" path="res://scenes/main/main.gd" id="1_2460s"]
 [ext_resource type="PackedScene" uid="uid://mc7kyf5tg1x0" path="res://scenes/whale/whale.tscn" id="3_upha2"]
 [ext_resource type="Script" path="res://scenes/main/enemySpawner.gd" id="5_nbjdi"]
 [ext_resource type="Script" path="res://scenes/main/youtube.gd" id="5_v5p80"]
-[ext_resource type="Script" path="res://scenes/main/WebSocket.gd" id="6_43355"]
 [ext_resource type="PackedScene" uid="uid://03hc1p1xva83" path="res://scenes/enemies/enemybase/enemybase.tscn" id="6_bf15p"]
 
 [node name="main" type="Control"]
@@ -44,9 +43,6 @@ script = ExtResource("5_v5p80")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="Node"]
 volume_db = -17.203
-
-[node name="WebSocket" type="Node" parent="."]
-script = ExtResource("6_43355")
 
 [connection signal="timeout" from="interestTimer" to="." method="_on_timer_timeout"]
 [connection signal="timeout" from="incomeTimer" to="." method="_on_incometimer_timeout"]
