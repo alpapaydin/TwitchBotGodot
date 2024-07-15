@@ -12,7 +12,7 @@ func _ready() -> void:
 	# <client_id>
 	# <client_secret>
 	# <initial channel>
-	var authfile := FileAccess.open("res://auth", FileAccess.READ)
+	var authfile := FileAccess.open("user://auth", FileAccess.READ)
 	client_id = authfile.get_line()
 	client_secret = authfile.get_line()
 	var initial_channel = authfile.get_line()
